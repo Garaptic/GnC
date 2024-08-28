@@ -225,6 +225,61 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &62799156
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 62799158}
+  - component: {fileID: 62799157}
+  m_Layer: 0
+  m_Name: DefenseHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &62799157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62799156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38bf82638b4f6c94d9b6c70c885e27d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+<<<<<<< HEAD
+  playerCardUI: {fileID: 2049887326}
+  enemyCardUI: {fileID: 597593047}
+  playerCard: {fileID: 1636619888}
+  enemyCard: {fileID: 1685067873}
+  actionValue: 3
+  cooldown: 1
+=======
+  playerCard: {fileID: 1636619888}
+  playerCardUI: {fileID: 2049887326}
+>>>>>>> fbeb6d4c1de2424ef168740aceb83fa5cb352c13
+--- !u!4 &62799158
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62799156}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1881756710}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &150157552
 GameObject:
   m_ObjectHideFlags: 0
@@ -599,7 +654,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1881756709}
         m_TargetAssemblyTypeName: FightManager, Assembly-CSharp
-        m_MethodName: PlayerDefend
+        m_MethodName: OnDefendButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1032,7 +1087,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f00c2d39efcb7ad4296f854980767ad0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameText: {fileID: 526039651}
+  cardNameText: {fileID: 526039651}
   healthText: {fileID: 1747348967}
   strengthText: {fileID: 934282154}
   defenseText: {fileID: 693312979}
@@ -1240,7 +1295,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2619125632649085084, guid: 74961264976767d45b1bb70982f6ef3b, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1636619882}
+      addedObject: {fileID: 1636619888}
   m_SourcePrefab: {fileID: 100100000, guid: 74961264976767d45b1bb70982f6ef3b, type: 3}
 --- !u!1 &758721037
 GameObject:
@@ -1531,6 +1586,64 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 934604995}
   m_CullTransparentMesh: 1
+--- !u!1 &984585661
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 984585662}
+  - component: {fileID: 984585663}
+  m_Layer: 0
+  m_Name: AtackHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &984585662
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984585661}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1881756710}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &984585663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984585661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d118306bcc291e04d9a68696c8144e5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+<<<<<<< HEAD
+  playerCardUI: {fileID: 2049887326}
+  enemyCardUI: {fileID: 597593047}
+  playerCard: {fileID: 1636619888}
+  enemyCard: {fileID: 1685067873}
+  actionValue: 5
+  cooldown: 1
+  targetCard: {fileID: 1685067873}
+=======
+  playerCard: {fileID: 1636619888}
+  enemyCard: {fileID: 1685067873}
+  enemyCardUI: {fileID: 597593047}
+  playerCardUI: {fileID: 2049887326}
+>>>>>>> fbeb6d4c1de2424ef168740aceb83fa5cb352c13
 --- !u!1001 &1091005160
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1601,7 +1714,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7328882919492208955, guid: b1e95e9a209483b4aa7e4f219d98fd2b, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1685067867}
+      addedObject: {fileID: 1685067873}
   m_SourcePrefab: {fileID: 100100000, guid: b1e95e9a209483b4aa7e4f219d98fd2b, type: 3}
 --- !u!1 &1481542951
 GameObject:
@@ -1688,7 +1801,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1881756709}
         m_TargetAssemblyTypeName: FightManager, Assembly-CSharp
-        m_MethodName: PlayerAttack
+        m_MethodName: OnAttackButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2143,7 +2256,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2619125632649085084, guid: 74961264976767d45b1bb70982f6ef3b, type: 3}
   m_PrefabInstance: {fileID: 755034016}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1636619882
+--- !u!114 &1636619888
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2156,15 +2269,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardName: Roundy
-  health: 1000
-  strength: 10
-  defense: 10
+  health: 50
+  strength: 3
+  defense: 3
+  defaultDefense: 3
 --- !u!1 &1685067866 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7328882919492208955, guid: b1e95e9a209483b4aa7e4f219d98fd2b, type: 3}
   m_PrefabInstance: {fileID: 1091005160}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1685067867
+--- !u!114 &1685067873
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2177,9 +2291,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardName: Raydes
-  health: 1000
-  strength: 30
-  defense: 30
+<<<<<<< HEAD
+  health: 50
+  strength: 4
+  defense: 7
+  defaultDefense: 7
+=======
+  health: 100
+  strength: 21
+  defense: 21
+>>>>>>> fbeb6d4c1de2424ef168740aceb83fa5cb352c13
 --- !u!1 &1745161908
 GameObject:
   m_ObjectHideFlags: 0
@@ -2747,6 +2868,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1881756710}
   - component: {fileID: 1881756709}
+  - component: {fileID: 1881756711}
   m_Layer: 0
   m_Name: FightManager
   m_TagString: Untagged
@@ -2766,12 +2888,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9be2380f28d745428265f5d1cebb075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCard: {fileID: 1636619882}
-  enemyCard: {fileID: 1685067867}
+  playerCard: {fileID: 1636619888}
+  enemyCard: {fileID: 1685067873}
   playerCardUI: {fileID: 2049887326}
   enemyCardUI: {fileID: 597593047}
   attackButton: {fileID: 1481542953}
   defendButton: {fileID: 281444395}
+  attackHandler: {fileID: 984585663}
+  defenseHandler: {fileID: 62799157}
 --- !u!4 &1881756710
 Transform:
   m_ObjectHideFlags: 0
@@ -2784,9 +2908,24 @@ Transform:
   m_LocalPosition: {x: 374.32526, y: -7.053625, z: 17.261036}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 984585662}
+  - {fileID: 62799158}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1881756711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881756708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fae9a363b1c30de4db90afdf875371da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCard: {fileID: 1636619888}
 --- !u!1 &2049887324
 GameObject:
   m_ObjectHideFlags: 0
@@ -2836,7 +2975,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f00c2d39efcb7ad4296f854980767ad0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameText: {fileID: 1767748727}
+  cardNameText: {fileID: 1767748727}
   healthText: {fileID: 1548047393}
   strengthText: {fileID: 1801435041}
   defenseText: {fileID: 1523815555}

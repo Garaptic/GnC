@@ -3,9 +3,10 @@ using UnityEngine;
 public class Card : MonoBehaviour
 {
     public string cardName;
-    public int health;
-    public int strength;
-    public int defense;
+    [SerializeField] public int health;
+    [SerializeField] public int strength;
+    [SerializeField] public int defense;
+    [SerializeField] public int defaultDefense;
 
     public void Attack(Card target)
     {

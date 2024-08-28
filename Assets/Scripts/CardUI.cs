@@ -1,33 +1,18 @@
 ﻿using UnityEngine;
-using TMPro; // TextMeshPro
+using TMPro;
 
 public class CardUI : MonoBehaviour
 {
-    public TextMeshProUGUI nameText;
-    public TextMeshProUGUI healthText;
-    public TextMeshProUGUI strengthText;
-    public TextMeshProUGUI defenseText;
+    [SerializeField] private TMP_Text cardNameText;
+    [SerializeField] private TMP_Text healthText;
+    [SerializeField] private TMP_Text strengthText;
+    [SerializeField] private TMP_Text defenseText;
 
-    private Card card;
-
-    public void SetCard(Card newCard)
+    public void UpdateUI(Card card)
     {
-        card = newCard;
-        UpdateUI();
-    }
-
-    public void UpdateUI()
-    {
-        if (card != null)
-        {
-            if (nameText != null)
-                nameText.text = card.cardName;
-            if (healthText != null)
-                healthText.text = "Health: " + card.health;
-            if (strengthText != null)
-                strengthText.text = "Strength: " + card.strength;
-            if (defenseText != null)
-                defenseText.text = "Defense: " + card.defense;
-        }
+        cardNameText.text = card.cardName;
+        healthText.text = "Health: " + card.health;
+        strengthText.text = "Strength: " + card.strength;
+        defenseText.text = "Defense: " + card.defense;
     }
 }
