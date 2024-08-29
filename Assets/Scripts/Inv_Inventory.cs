@@ -14,7 +14,6 @@ public class Inv_Inventory : MonoBehaviour
     [SerializeField] Transform[] itemPositions;
     [SerializeField] TMP_Text warning;
     [SerializeField] List<GameObject> playerItems = new List<GameObject>();
-    GameObject itemPosition;
     public TextMeshProUGUI pickupText;
 
     private void Start()
@@ -25,20 +24,17 @@ public class Inv_Inventory : MonoBehaviour
         {
             buttons.Add(child.GetComponent<Button>());
         }
+
+        // Загрузка состояния инвентаря с передачей состояния
+        InventoryState state = SaveManager.Instance.LoadInventoryState(); // Пример загрузки состояния
+        LoadInventoryState(state);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (Cursor.lockState == CursorLockMode.Locked)
-            {
-                Cursor.lockState = CursorLockMode.None;
-            }
-            else
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-            }
+            Cursor.lockState = (Cursor.lockState == CursorLockMode.Locked) ? CursorLockMode.None : CursorLockMode.Locked;
         }
     }
 
@@ -84,11 +80,61 @@ public class Inv_Inventory : MonoBehaviour
         GetItemFromInventory(item);
     }
 
+    public InventoryState GetInventoryState()
+    {
+        InventoryState state = new InventoryState();
+        state.items = new List<string>(inventoryItems); // Копируем текущие предметы в состояние
+        return state;
+    }
+
+    public void LoadInventoryState(InventoryState state)
+    {
+        inventoryItems = new List<string>(state.items); // Восстанавливаем предметы из сохранённого состояния
+
+        // Обновляем изображения на кнопках
+        for (int i = 0; i < buttons.Count; i++)
+        {
+            var buttonImage = buttons[i].GetComponent<Image>();
+
+            if (i < inventoryItems.Count)
+            {
+                var itemName = inventoryItems[i];
+                // Загружаем изображение карточки из ресурсов
+                Sprite itemSprite = Resources.Load<Sprite>(itemName);
+
+                if (itemSprite != null)
+                {
+                    buttonImage.sprite = itemSprite; // Присваиваем картинку карточки
+                    buttonImage.color = Color.white; // Убедись, что цвет изображения не изменен
+                }
+                else
+                {
+                    Debug.LogWarning($"Sprite for item '{itemName}' not found in Resources.");
+                    // Устанавливаем изображение пустого слота, если карточка не найдена
+                    buttonImage.sprite = Resources.Load<Sprite>("Slot");
+                    buttonImage.color = Color.white;
+                }
+            }
+            else
+            {
+                // Устанавливаем изображение слота, если предметов меньше, чем слотов
+                buttonImage.sprite = Resources.Load<Sprite>("Slot"); // Путь к изображению слота
+                buttonImage.color = Color.white;
+            }
+        }
+    }
+
     public void GetItemFromInventory(string itemName)
     {
+        Debug.Log($"Trying to get item: {itemName}");
+
         var resourceItem = resourceItems.Find(x => x.name == itemName);
 
-        if (resourceItem == null) return;
+        if (resourceItem == null)
+        {
+            Debug.LogWarning($"Item {itemName} not found in resourceItems.");
+            return;
+        }
 
         var putFind = playerItems.Find(x => x.name == itemName);
 
@@ -97,42 +143,56 @@ public class Inv_Inventory : MonoBehaviour
             if (itemInArm != null)
             {
                 itemInArm.SetActive(false);
+                Debug.Log($"Deactivating current item: {itemInArm.name}");
             }
 
+            // Находим точку для размещения объекта
             var pos = resourceItem.GetComponent<Inv_ItemPosition>().positon;
             if (pos == Inv_ItemPosition.ItemPos.Head)
             {
-                itemPoint.position = itemPositions[0].position;
-                itemPosition = itemPositions[0].gameObject;
+                itemPoint = itemPositions[0]; // Присваиваем сам Transform, а не позицию
             }
             else if (pos == Inv_ItemPosition.ItemPos.Spine)
             {
-                itemPoint.position = itemPositions[1].position;
-                itemPosition = itemPositions[1].gameObject;
+                itemPoint = itemPositions[1];
             }
             else
             {
-                itemPoint.position = itemPositions[2].position;
-                itemPosition = itemPositions[2].gameObject;
+                itemPoint = itemPositions[2];
             }
 
-            var newItem = Instantiate(resourceItem, itemPoint);
-            newItem.transform.parent = itemPosition.transform;
+            Debug.Log($"Instantiating new item: {itemName} at {itemPoint.name}");
+
+            // Создаем новый объект и привязываем его к нужной точке
+            var newItem = Instantiate(resourceItem, itemPoint.position, itemPoint.rotation, itemPoint);
             newItem.name = itemName;
+
+            // Устанавливаем локальные параметры
+            newItem.transform.localPosition = Vector3.zero; // Центрируем объект
+            newItem.transform.localRotation = Quaternion.identity; // Устанавливаем ориентацию
+            newItem.transform.localScale = new Vector3(0.4645516f, 0.04637306f, 0.7200254f); // Устанавливаем нормальный масштаб
+            newItem.transform.rotation = Quaternion.Euler(0, 245, 0);
+
+            Debug.Log($"Item {newItem.name} instantiated and positioned.");
+
             playerItems.Add(newItem);
             itemInArm = newItem;
         }
         else
         {
+            Debug.Log($"Item {itemName} already in playerItems.");
+
             if (putFind == itemInArm)
             {
                 putFind.SetActive(!putFind.activeSelf);
+                Debug.Log($"Toggling visibility of {putFind.name}.");
             }
             else
             {
                 itemInArm.SetActive(false);
                 putFind.SetActive(true);
                 itemInArm = putFind;
+                Debug.Log($"Switching active item to {putFind.name}.");
             }
         }
     }

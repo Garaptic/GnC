@@ -254,17 +254,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38bf82638b4f6c94d9b6c70c885e27d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
   playerCardUI: {fileID: 2049887326}
   enemyCardUI: {fileID: 597593047}
   playerCard: {fileID: 1636619888}
   enemyCard: {fileID: 1685067873}
   actionValue: 3
-  cooldown: 1
-=======
-  playerCard: {fileID: 1636619888}
-  playerCardUI: {fileID: 2049887326}
->>>>>>> fbeb6d4c1de2424ef168740aceb83fa5cb352c13
+  cooldown: 0.1
 --- !u!4 &62799158
 Transform:
   m_ObjectHideFlags: 0
@@ -1596,6 +1591,7 @@ GameObject:
   m_Component:
   - component: {fileID: 984585662}
   - component: {fileID: 984585663}
+  - component: {fileID: 984585664}
   m_Layer: 0
   m_Name: AtackHandler
   m_TagString: Untagged
@@ -1630,20 +1626,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d118306bcc291e04d9a68696c8144e5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
   playerCardUI: {fileID: 2049887326}
   enemyCardUI: {fileID: 597593047}
   playerCard: {fileID: 1636619888}
   enemyCard: {fileID: 1685067873}
-  actionValue: 5
-  cooldown: 1
+  actionValue: 3
+  cooldown: 0.1
   targetCard: {fileID: 1685067873}
-=======
+--- !u!114 &984585664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984585661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8348637618eb364bb72d193beaaea0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCardUI: {fileID: 2049887326}
+  enemyCardUI: {fileID: 597593047}
   playerCard: {fileID: 1636619888}
   enemyCard: {fileID: 1685067873}
-  enemyCardUI: {fileID: 597593047}
-  playerCardUI: {fileID: 2049887326}
->>>>>>> fbeb6d4c1de2424ef168740aceb83fa5cb352c13
+  actionValue: 4
+  cooldown: 0.1
+  targetCard: {fileID: 1636619888}
 --- !u!1001 &1091005160
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2269,10 +2277,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardName: Roundy
-  health: 50
+  health: 30
   strength: 3
   defense: 3
-  defaultDefense: 3
+  defaultDefense: 0
 --- !u!1 &1685067866 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7328882919492208955, guid: b1e95e9a209483b4aa7e4f219d98fd2b, type: 3}
@@ -2291,16 +2299,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardName: Raydes
-<<<<<<< HEAD
-  health: 50
+  health: 30
   strength: 4
-  defense: 7
-  defaultDefense: 7
-=======
-  health: 100
-  strength: 21
-  defense: 21
->>>>>>> fbeb6d4c1de2424ef168740aceb83fa5cb352c13
+  defense: 0
+  defaultDefense: 0
 --- !u!1 &1745161908
 GameObject:
   m_ObjectHideFlags: 0
@@ -2868,7 +2870,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1881756710}
   - component: {fileID: 1881756709}
-  - component: {fileID: 1881756711}
   m_Layer: 0
   m_Name: FightManager
   m_TagString: Untagged
@@ -2894,8 +2895,6 @@ MonoBehaviour:
   enemyCardUI: {fileID: 597593047}
   attackButton: {fileID: 1481542953}
   defendButton: {fileID: 281444395}
-  attackHandler: {fileID: 984585663}
-  defenseHandler: {fileID: 62799157}
 --- !u!4 &1881756710
 Transform:
   m_ObjectHideFlags: 0
@@ -2913,19 +2912,6 @@ Transform:
   - {fileID: 62799158}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1881756711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1881756708}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fae9a363b1c30de4db90afdf875371da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerCard: {fileID: 1636619888}
 --- !u!1 &2049887324
 GameObject:
   m_ObjectHideFlags: 0

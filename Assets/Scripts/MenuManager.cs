@@ -1,26 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void NewGame()
     {
-
+        SaveManager.Instance.ResetGameData(); // Сбрасываем сохранённые данные
+        SceneManager.LoadScene("GnC"); // Переключаемся на сцену с игрой
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ContinueGame()
     {
-
-    }
-
-    public void StartGame()
-    {
-        SceneManager.LoadScene("GnC");
+        SceneManager.LoadScene("GnC"); // Загружаем сцену продолжения
     }
 }

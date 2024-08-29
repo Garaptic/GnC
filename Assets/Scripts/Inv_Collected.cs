@@ -12,8 +12,11 @@ public class Inv_Collected : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {                 
-        inventory.AddItem(image, name, gameObject);
+    {
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log($"Picking up item: {name}");
+            inventory.AddItem(image, name, gameObject);
+        }
     }
-
 }
