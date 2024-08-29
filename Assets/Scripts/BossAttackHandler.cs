@@ -3,6 +3,7 @@ using UnityEngine;
 public class BossAttackHandler : BossActionHandler
 {
     public Card targetCard; // Целевая карта
+    public Card activeCard; // Активная карта
 
     protected override void Start()
     {
@@ -13,21 +14,22 @@ public class BossAttackHandler : BossActionHandler
 
     protected override void OnPerformAction()
     {
-        if (targetCard != null && targetCard.health > 0)
+        if (targetCard == null || enemyCard == null)
+        {
+            Debug.LogError("Target card or enemy card is not set.");
+            return;
+        }
+
+        if (targetCard.health > 0)
         {
             int damage = Mathf.Max(0, actionValue - targetCard.defense);
-            targetCard.health -= damage;
-            Debug.Log(firstCard.cardName + " нанес " + damage + " урона врагу! Осталось здоровья врага: " + enemyCard.health);
+            enemyCard.health -= damage;
+            Debug.Log(targetCard.cardName + " нанес " + damage + " урона врагу! Осталось здоровья врага: " + enemyCard.health);
 
-            if (targetCard.health <= 0)
+            if (enemyCard.health <= 0)
             {
-                targetCard.Die();
+                enemyCard.Die();
             }
         }
-    }
-
-    protected override void UpdateUI()
-    {
-        base.UpdateUI(); // Обновляем UI текущей карты
     }
 }

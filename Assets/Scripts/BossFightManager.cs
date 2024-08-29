@@ -13,61 +13,78 @@ public class BossFightManager : MonoBehaviour
 
     public Button firstCardAttackButton; // Кнопка атаки для FirstCard
     public Button secondCardAttackButton; // Кнопка атаки для SecondCard
+    public Button firstCardDefenseButton; // Кнопка защиты для FirstCard
+    public Button secondCardDefenseButton; // Кнопка защиты для SecondCard
 
     private BossAttackHandler firstCardAttackHandler;
     private BossAttackHandler secondCardAttackHandler;
-
-    private Card activeCard;
 
     void Start()
     {
         firstCardAttackHandler = gameObject.AddComponent<BossAttackHandler>();
         secondCardAttackHandler = gameObject.AddComponent<BossAttackHandler>();
 
-        firstCardAttackHandler.firstCard = firstCard;
-        firstCardAttackHandler.secondCard = secondCard;
-        firstCardAttackHandler.enemyCard = enemyCard;
-        firstCardAttackHandler.firstCardPanel = firstCardPanel;
-        firstCardAttackHandler.secondCardPanel = secondCardPanel;
-        firstCardAttackHandler.enemyCardPanel = enemyCardPanel;
+        // Настройка обработчиков атаки
+        SetupAttackHandler(firstCardAttackHandler, firstCard, secondCard, enemyCard, firstCardPanel, secondCardPanel, enemyCardPanel);
+        SetupAttackHandler(secondCardAttackHandler, secondCard, firstCard, enemyCard, secondCardPanel, firstCardPanel, enemyCardPanel);
 
-        secondCardAttackHandler.firstCard = firstCard;
-        secondCardAttackHandler.secondCard = secondCard;
-        secondCardAttackHandler.enemyCard = enemyCard;
-        secondCardAttackHandler.firstCardPanel = firstCardPanel;
-        secondCardAttackHandler.secondCardPanel = secondCardPanel;
-        secondCardAttackHandler.enemyCardPanel = enemyCardPanel;
-
-        firstCardAttackButton.onClick.AddListener(() => StartCardAction(firstCardAttackHandler, firstCard));
-        secondCardAttackButton.onClick.AddListener(() => StartCardAction(secondCardAttackHandler, secondCard));
+        // Настройка кнопок
+        firstCardAttackButton.onClick.AddListener(() => StartBothCardsAction(true));
+        secondCardAttackButton.onClick.AddListener(() => StartBothCardsAction(true));
+        firstCardDefenseButton.onClick.AddListener(() => StartCardAction(firstCardAttackHandler, firstCard, false));
+        secondCardDefenseButton.onClick.AddListener(() => StartCardAction(secondCardAttackHandler, secondCard, false));
 
         UpdateCardUI();
     }
 
-    private void StartCardAction(BossAttackHandler attackHandler, Card card)
+    private void SetupAttackHandler(BossAttackHandler handler, Card card, Card otherCard, Card enemy, CardUI cardPanel, CardUI otherCardPanel, CardUI enemyPanel)
     {
-        if (activeCard == null)
+        handler.firstCard = card;
+        handler.secondCard = otherCard;
+        handler.enemyCard = enemy;
+        handler.firstCardPanel = cardPanel;
+        handler.secondCardPanel = otherCardPanel;
+        handler.enemyCardPanel = enemyPanel;
+    }
+
+    private void StartBothCardsAction(bool isAttack)
+    {
+        if (firstCard != null && secondCard != null)
         {
-            activeCard = card;
-            attackHandler.targetCard = enemyCard; // Целью атаки будет враг
-            attackHandler.PerformAction();
-
-            if (enemyCard.health > 0)
-            {
-                // Логика атаки врага в ответ
-                AttackPlayerCards();
-            }
-
-            CheckForWinOrLose();
-            UpdateCardUI();
-            activeCard = null; // Сброс активной карты
+            StartCardAction(firstCardAttackHandler, firstCard, isAttack);
+            StartCardAction(secondCardAttackHandler, secondCard, isAttack);
         }
+    }
+
+    private void StartCardAction(BossAttackHandler attackHandler, Card card, bool isAttack)
+    {
+        if (attackHandler.targetCard == null) // Убедимся, что карта назначена
+        {
+            attackHandler.targetCard = enemyCard; // Целью атаки будет враг
+        }
+
+        if (isAttack)
+        {
+            attackHandler.PerformAction();
+            Debug.Log($"{card.cardName} атакует!");
+        }
+        else
+        {
+            Debug.Log($"{card.cardName} защищается!");
+        }
+
+        if (enemyCard.health > 0)
+        {
+            AttackPlayerCards();
+        }
+
+        CheckForWinOrLose();
+        UpdateCardUI();
     }
 
     private void AttackPlayerCards()
     {
         // Логика атаки врага для каждой карты игрока, если нужно
-        // В данный момент ничего не делаем, но можно добавить логику атаки
     }
 
     private void CheckForWinOrLose()
@@ -85,13 +102,11 @@ public class BossFightManager : MonoBehaviour
     private void HandleWin()
     {
         Debug.Log("Победа!");
-        // Дополнительные действия при победе
     }
 
     private void HandleLose()
     {
         Debug.Log("Поражение...");
-        // Дополнительные действия при поражении
     }
 
     private void UpdateCardUI()
