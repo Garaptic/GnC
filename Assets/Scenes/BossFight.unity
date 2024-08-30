@@ -151,14 +151,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 311e65e15fa6ae44aa14bb4faf789879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firstCard: {fileID: 121765940}
+  secondCard: {fileID: 1657512126}
+  enemyCard: {fileID: 1437795575}
+  firstCardPanel: {fileID: 2010073396}
+  secondCardPanel: {fileID: 378595739}
+  enemyCardPanel: {fileID: 1382631665}
   firstCardAttackButton: {fileID: 1110755573}
-  firstCardDefendButton: {fileID: 0}
-  secondCardAttackButton: {fileID: 101658838}
-  secondCardDefendButton: {fileID: 0}
-  firstCardAttackHandler: {fileID: 606678965}
-  secondCardAttackHandler: {fileID: 606678965}
-  firstCardActionHandler: {fileID: 0}
-  secondCardActionHandler: {fileID: 0}
+  secondCardAttackButton: {fileID: 1110755573}
+  firstCardDefenseButton: {fileID: 101658838}
+  secondCardDefenseButton: {fileID: 101658838}
 --- !u!4 &80014749
 Transform:
   m_ObjectHideFlags: 0
@@ -1113,6 +1115,7 @@ MonoBehaviour:
   actionValue: 0
   cooldown: 0
   targetCard: {fileID: 1437795575}
+  activeCard: {fileID: 0}
 --- !u!1 &613436287
 GameObject:
   m_ObjectHideFlags: 0

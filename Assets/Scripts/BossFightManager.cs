@@ -24,9 +24,15 @@ public class BossFightManager : MonoBehaviour
         firstCardAttackHandler = gameObject.AddComponent<BossAttackHandler>();
         secondCardAttackHandler = gameObject.AddComponent<BossAttackHandler>();
 
-        // Настройка обработчиков атаки
-        SetupAttackHandler(firstCardAttackHandler, firstCard, secondCard, enemyCard, firstCardPanel, secondCardPanel, enemyCardPanel);
-        SetupAttackHandler(secondCardAttackHandler, secondCard, firstCard, enemyCard, secondCardPanel, firstCardPanel, enemyCardPanel);
+        // Настройка обработчиков атаки с указанием actionValue
+        SetupAttackHandler(firstCardAttackHandler, firstCard, secondCard, enemyCard, firstCardPanel, secondCardPanel, enemyCardPanel, 3); // Установи нужное значение
+        SetupAttackHandler(secondCardAttackHandler, secondCard, firstCard, enemyCard, secondCardPanel, firstCardPanel, enemyCardPanel, 4); // Установи нужное значение
+
+        // Установка 3D карточек в слоты
+        firstCardAttackHandler.activeCard = firstCard;
+        secondCardAttackHandler.activeCard = secondCard;
+        firstCardAttackHandler.targetCard = enemyCard;
+        secondCardAttackHandler.targetCard = enemyCard;
 
         // Настройка кнопок
         firstCardAttackButton.onClick.AddListener(() => StartBothCardsAction(true));
@@ -37,7 +43,7 @@ public class BossFightManager : MonoBehaviour
         UpdateCardUI();
     }
 
-    private void SetupAttackHandler(BossAttackHandler handler, Card card, Card otherCard, Card enemy, CardUI cardPanel, CardUI otherCardPanel, CardUI enemyPanel)
+    private void SetupAttackHandler(BossAttackHandler handler, Card card, Card otherCard, Card enemy, CardUI cardPanel, CardUI otherCardPanel, CardUI enemyPanel, int actionValue)
     {
         handler.firstCard = card;
         handler.secondCard = otherCard;
@@ -45,6 +51,7 @@ public class BossFightManager : MonoBehaviour
         handler.firstCardPanel = cardPanel;
         handler.secondCardPanel = otherCardPanel;
         handler.enemyCardPanel = enemyPanel;
+        handler.actionValue = actionValue; // Установка actionValue
     }
 
     private void StartBothCardsAction(bool isAttack)
