@@ -103,7 +103,7 @@ public class FightManager : MonoBehaviour
     private void HandleLose()
     {
         Debug.Log("Поражение...");
-        SceneManager.LoadScene("LoseScene"); // Загружаем сцену поражения
+        SceneManager.LoadScene("Menu"); // Загружаем сцену поражения
     }
 
     private void UpdateCardUI()

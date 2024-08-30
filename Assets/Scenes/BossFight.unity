@@ -176,6 +176,7 @@ Transform:
   m_Children:
   - {fileID: 606678964}
   - {fileID: 1886514750}
+  - {fileID: 338703845}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &101658836
@@ -807,6 +808,60 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 258506474}
   m_CullTransparentMesh: 1
+--- !u!1 &338703844
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 338703845}
+  - component: {fileID: 338703846}
+  m_Layer: 0
+  m_Name: BossEnemyAttackHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &338703845
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 338703844}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 80014749}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &338703846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 338703844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e8883c819ab2604d947c0fd8f68d3b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firstCardPanel: {fileID: 2010073396}
+  secondCardPanel: {fileID: 378595739}
+  enemyCardPanel: {fileID: 1382631665}
+  firstCard: {fileID: 121765940}
+  secondCard: {fileID: 1657512126}
+  enemyCard: {fileID: 1437795575}
+  actionValue: 0
+  cooldown: 0
+  targetCard: {fileID: 0}
+  activeCard: {fileID: 0}
 --- !u!1 &378595737
 GameObject:
   m_ObjectHideFlags: 0
@@ -2628,8 +2683,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardName: Garic
-  health: 60
-  strength: 4
+  health: 80
+  strength: 8
   defense: 0
   defaultDefense: 0
 --- !u!1 &1457279456

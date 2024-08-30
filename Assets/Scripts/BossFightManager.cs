@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BossFightManager : MonoBehaviour
 {
@@ -52,6 +53,24 @@ public class BossFightManager : MonoBehaviour
         secondCardDefenseButton.onClick.AddListener(() => StartCardAction(secondCardAttackHandler, secondCard, false));
 
         UpdateCardUI();
+    }
+
+    void Update()
+    {
+        // Блок управления курсором
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (Cursor.lockState == CursorLockMode.Locked)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+        }
     }
 
     private void SetupAttackHandler(BossAttackHandler handler, Card card, Card otherCard, Card enemy, CardUI cardPanel, CardUI otherCardPanel, CardUI enemyPanel)
@@ -145,6 +164,7 @@ public class BossFightManager : MonoBehaviour
     private void HandleWin()
     {
         Debug.Log("Победа!");
+        SceneManager.LoadScene("GnC");
     }
 
     private void HandleLose()
