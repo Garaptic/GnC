@@ -8,7 +8,6 @@ public class BossAttackHandler : BossActionHandler
     protected override void Start()
     {
         base.Start();
-        actionValue = 3; // Примерная сила атаки
         cooldown = 1f; // Время перезарядки
     }
 

@@ -3,30 +3,41 @@ using UnityEngine.UI;
 
 public class BossFightManager : MonoBehaviour
 {
-    public Card firstCard; // 3D карта FirstCard (Ro)
-    public Card secondCard; // 3D карта SecondCard (Ra)
-    public Card enemyCard; // 3D карта EnemyCard
+    public Card firstCard;
+    public Card secondCard;
+    public Card enemyCard;
 
-    public CardUI firstCardPanel; // UI панель для FirstCard
-    public CardUI secondCardPanel; // UI панель для SecondCard
-    public CardUI enemyCardPanel; // UI панель для EnemyCard
+    public CardUI firstCardPanel;
+    public CardUI secondCardPanel;
+    public CardUI enemyCardPanel;
 
-    public Button firstCardAttackButton; // Кнопка атаки для FirstCard
-    public Button secondCardAttackButton; // Кнопка атаки для SecondCard
-    public Button firstCardDefenseButton; // Кнопка защиты для FirstCard
-    public Button secondCardDefenseButton; // Кнопка защиты для SecondCard
+    public Button firstCardAttackButton;
+    public Button secondCardAttackButton;
+    public Button firstCardDefenseButton;
+    public Button secondCardDefenseButton;
 
     private BossAttackHandler firstCardAttackHandler;
     private BossAttackHandler secondCardAttackHandler;
+    private BossEnemyAttackHandler enemyAttackHandler;
+
+    private Card lastAttackingCard; // Хранение последней атакующей карты
 
     void Start()
     {
         firstCardAttackHandler = gameObject.AddComponent<BossAttackHandler>();
         secondCardAttackHandler = gameObject.AddComponent<BossAttackHandler>();
+        enemyAttackHandler = gameObject.AddComponent<BossEnemyAttackHandler>();
 
-        // Настройка обработчиков атаки с указанием actionValue
-        SetupAttackHandler(firstCardAttackHandler, firstCard, secondCard, enemyCard, firstCardPanel, secondCardPanel, enemyCardPanel, 3); // Установи нужное значение
-        SetupAttackHandler(secondCardAttackHandler, secondCard, firstCard, enemyCard, secondCardPanel, firstCardPanel, enemyCardPanel, 4); // Установи нужное значение
+        // Установка значений ActionValue
+        firstCardAttackHandler.actionValue = 3;
+        secondCardAttackHandler.actionValue = 4;
+
+        // Настройка обработчиков атаки
+        SetupAttackHandler(firstCardAttackHandler, firstCard, secondCard, enemyCard, firstCardPanel, secondCardPanel, enemyCardPanel);
+        SetupAttackHandler(secondCardAttackHandler, secondCard, firstCard, enemyCard, secondCardPanel, firstCardPanel, enemyCardPanel);
+
+        // Настройка обработчика атаки врага
+        SetupEnemyAttackHandler(enemyAttackHandler, enemyCard, enemyCardPanel, firstCard, firstCardPanel, secondCard, secondCardPanel);
 
         // Установка 3D карточек в слоты
         firstCardAttackHandler.activeCard = firstCard;
@@ -35,15 +46,15 @@ public class BossFightManager : MonoBehaviour
         secondCardAttackHandler.targetCard = enemyCard;
 
         // Настройка кнопок
-        firstCardAttackButton.onClick.AddListener(() => StartBothCardsAction(true));
-        secondCardAttackButton.onClick.AddListener(() => StartBothCardsAction(true));
+        firstCardAttackButton.onClick.AddListener(() => StartCardAction(firstCardAttackHandler, firstCard, true));
+        secondCardAttackButton.onClick.AddListener(() => StartCardAction(secondCardAttackHandler, secondCard, true));
         firstCardDefenseButton.onClick.AddListener(() => StartCardAction(firstCardAttackHandler, firstCard, false));
         secondCardDefenseButton.onClick.AddListener(() => StartCardAction(secondCardAttackHandler, secondCard, false));
 
         UpdateCardUI();
     }
 
-    private void SetupAttackHandler(BossAttackHandler handler, Card card, Card otherCard, Card enemy, CardUI cardPanel, CardUI otherCardPanel, CardUI enemyPanel, int actionValue)
+    private void SetupAttackHandler(BossAttackHandler handler, Card card, Card otherCard, Card enemy, CardUI cardPanel, CardUI otherCardPanel, CardUI enemyPanel)
     {
         handler.firstCard = card;
         handler.secondCard = otherCard;
@@ -51,16 +62,19 @@ public class BossFightManager : MonoBehaviour
         handler.firstCardPanel = cardPanel;
         handler.secondCardPanel = otherCardPanel;
         handler.enemyCardPanel = enemyPanel;
-        handler.actionValue = actionValue; // Установка actionValue
     }
 
-    private void StartBothCardsAction(bool isAttack)
+    private void SetupEnemyAttackHandler(BossEnemyAttackHandler handler, Card enemy, CardUI enemyPanel, Card firstCard, CardUI firstCardPanel, Card secondCard, CardUI secondCardPanel)
     {
-        if (firstCard != null && secondCard != null)
-        {
-            StartCardAction(firstCardAttackHandler, firstCard, isAttack);
-            StartCardAction(secondCardAttackHandler, secondCard, isAttack);
-        }
+        handler.enemyCard = enemy;
+        handler.enemyCardPanel = enemyPanel;
+        handler.firstCard = firstCard;
+        handler.firstCardPanel = firstCardPanel;
+        handler.secondCard = secondCard;
+        handler.secondCardPanel = secondCardPanel;
+
+        // Установка активной карты врага
+        handler.activeCard = enemy; // Убедитесь, что это 3D объект врага
     }
 
     private void StartCardAction(BossAttackHandler attackHandler, Card card, bool isAttack)
@@ -74,6 +88,16 @@ public class BossFightManager : MonoBehaviour
         {
             attackHandler.PerformAction();
             Debug.Log($"{card.cardName} атакует!");
+
+            // Установка последней атакующей карты для врага
+            if (attackHandler is BossAttackHandler bossAttackHandler)
+            {
+                lastAttackingCard = card; // Установите последнюю атакующую карту
+                if (enemyAttackHandler != null)
+                {
+                    enemyAttackHandler.SetLastAttacker(card);
+                }
+            }
         }
         else
         {
@@ -91,7 +115,19 @@ public class BossFightManager : MonoBehaviour
 
     private void AttackPlayerCards()
     {
-        // Логика атаки врага для каждой карты игрока, если нужно
+        if (enemyCard.health > 0)
+        {
+            if (lastAttackingCard != null)
+            {
+                enemyAttackHandler.targetCard = lastAttackingCard; // Устанавливаем цель атаки врага
+                Debug.Log($"Враг атакует {lastAttackingCard.cardName}");
+                enemyAttackHandler.PerformAction();
+            }
+            else
+            {
+                Debug.LogError("Last attacking card is not set.");
+            }
+        }
     }
 
     private void CheckForWinOrLose()
